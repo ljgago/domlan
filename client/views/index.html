@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="es" ng-app="Domlan" ng-controller="DomlanCtrl"><head id="head"><meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui"><meta content="yes" name="apple-mobile-web-app-status-bar-style"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Domlan</title><!--link(rel='stylesheet', href='/assets/components/foundation/css/foundation.css')--><link rel="stylesheet" href="/assets/styles/css/importer.css"><link rel="stylesheet" href="/assets/components/font-awesome/css/font-awesome.min.css"><script src="/assets/components/foundation/js/vendor/modernizr.js"></script><script src="/assets/components/foundation/js/vendor/jquery.js"></script><script src="/assets/components/foundation/js/vendor/fastclick.js"></script><script src="/assets/components/foundation/js/foundation.min.js"></script><!-- Angular.JS--><script src="/assets/components/angular/angular.min.js"></script><script src="/assets/components/angular-route/angular-route.min.js"></script><!--script(src='/assets/components/angular-animate/angular-animate.min.js')--><!--script(src='/assets/components/angular-listview/angular-listview.min.js')--><!-- Websocket para Angular--><script src="/assets/components/ng-websocket/ng-websocket.js"></script><!-- Scripts utilizados para el modelo MVC de Angular.js--><script src="/assets/js/app.js"></script><script src="/assets/js/controllers.js"></script><!--script(src='/assets/js/services.js')--><!--script(src='/assets/js/directives.js')--><!--script(src='/assets/js/filters.js')--><!--script(src='/assets/components/device-directive-ng/dist/device-directive-ng.js')-->
+</head><body id="body"><div data-offcanvas="data-offcanvas" class="off-canvas-wrap"><div class="inner-wrap"><nav class="tab-bar left-off-canvas-toggle"><section class="tab-bar-section"><i class="fa fa-bars fa-lg"></i></section><section class="middle tab-bar-section"><h1 class="title">DOMLAN</h1></section></nav><aside class="left-off-canvas-menu"><ul class="off-canvas-list"><li><label>Menú de DOMLAN</label></li><li><a href="#/"><i class="fa fa-home"> Inicio</i></a></li><li class="has-submenu"><a href="#/devices">Lista de dispositivos</a><ul class="left-submenu"><li class="back"><a>Atras</a></li><li><label>QMTT Devices</label></li><li><a href="#/Totem1">Link 1</a></li><li><a href="#/Totem2">Link 2  </a></li><li><a href="#/Totem3">Link 3</a></li></ul></li><li><label>Lugares</label></li><div ng-repeat="location in locations"><li><a href="#/{{location}}">{{location}}</a></li></div><!--div(ng-repeat='categorie in categories')
+li.has-submenu
+  a(href='#/{{categorie}}') {{categorie}}
+  ul.left-submenu
+    li.back
+      a Atras
+    div(ng-repeat='device in devices')
+      li
+        a(href='#/{{device}}') {{device}}--></ul></aside><section class="main-section"><div class="ng-view">          </div></section><a class="exit-off-canvas"></a></div></div><script>$(document).foundation({
+  offcanvas : {
+    // Sets method in which offcanvas opens.
+    // [ move | overlap_single | overlap ]
+    open_method: 'move', 
+    // Should the menu close when a menu link is clicked?
+    // [ true | false ]
+    close_on_click : true
+  }
+});
+$(window).on("load resize", function(){
+  height = Math.max($('.inner-wrap').height(), $(this).height());
+  $('.left-off-canvas-menu,.off-canvas-wrap,#main-nav,.exit-off-canvas').height(height);
+});</script></body></html>

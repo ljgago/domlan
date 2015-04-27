@@ -1,0 +1,22 @@
+{
+  "name": "domlan",
+  "version": "0.0.1",
+  "authors": [
+    "Leonardo Gago <ljgago@gmail.com>"
+  ],
+  "description": "Domotica system",
+  "license": "GPL3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "1.x.x",
+    "angular-route": "1.x.x",
+    "angular-animate": "1.x.x",
+    "font-awesome": "4.x.x",
+    "ng-websocket": "~0.2.1",
+    "foundation": "~5.5.1"
+  }
+}

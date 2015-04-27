@@ -1,0 +1,99 @@
+doctype html
+html(lang='es', ng-app='Domlan', ng-controller='DomlanCtrl')
+  head#head
+    meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui')
+    meta(content='yes', name='apple-mobile-web-app-status-bar-style')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title Domlan
+
+    //link(rel='stylesheet', href='/assets/components/foundation/css/foundation.css')
+    link(rel='stylesheet', href='/assets/styles/css/importer.css')
+    link(rel='stylesheet', href='/assets/components/font-awesome/css/font-awesome.min.css')
+
+    script(src='/assets/components/foundation/js/vendor/modernizr.js')
+    script(src='/assets/components/foundation/js/vendor/jquery.js')
+    script(src='/assets/components/foundation/js/vendor/fastclick.js')
+    script(src='/assets/components/foundation/js/foundation.min.js')
+
+    // Angular.JS
+    script(src='/assets/components/angular/angular.min.js')
+    script(src='/assets/components/angular-route/angular-route.min.js')
+    //script(src='/assets/components/angular-animate/angular-animate.min.js')
+    //script(src='/assets/components/angular-listview/angular-listview.min.js')
+
+    // Websocket para Angular
+    script(src='/assets/components/ng-websocket/ng-websocket.js')
+
+    // Scripts utilizados para el modelo MVC de Angular.js
+    script(src='/assets/js/app.js')
+    script(src='/assets/js/controllers.js')
+    //script(src='/assets/js/services.js')
+    //script(src='/assets/js/directives.js')
+    //script(src='/assets/js/filters.js')
+    //script(src='/assets/components/device-directive-ng/dist/device-directive-ng.js')
+
+
+  body#body
+    .off-canvas-wrap(data-offcanvas='data-offcanvas')
+      .inner-wrap
+        nav.tab-bar.left-off-canvas-toggle
+          section.tab-bar-section
+            i.fa.fa-bars.fa-lg
+          section.middle.tab-bar-section
+            h1.title DOMLAN
+        aside.left-off-canvas-menu
+          ul.off-canvas-list
+            li
+              label Menú de DOMLAN
+            li
+              a(href='#/')
+                i.fa.fa-home  Inicio
+            li.has-submenu
+              a(href='#/devices') Lista de dispositivos
+              ul.left-submenu
+                li.back
+                  a Atras
+                li
+                  label QMTT Devices
+                li
+                  a(href='#/Totem1') Link 1
+                li
+                  a(href='#/Totem2') Link 2  
+                li
+                  a(href='#/Totem3') Link 3
+            li
+              label Lugares
+            div(ng-repeat='location in locations')
+              li
+                a(href='#/{{location}}') {{location}}
+            //
+              div(ng-repeat='categorie in categories')
+              li.has-submenu
+                a(href='#/{{categorie}}') {{categorie}}
+                ul.left-submenu
+                  li.back
+                    a Atras
+                  div(ng-repeat='device in devices')
+                    li
+                      a(href='#/{{device}}') {{device}}
+        section.main-section
+          .ng-view           
+        a.exit-off-canvas
+          
+
+    script.
+      $(document).foundation({
+        offcanvas : {
+          // Sets method in which offcanvas opens.
+          // [ move | overlap_single | overlap ]
+          open_method: 'move', 
+          // Should the menu close when a menu link is clicked?
+          // [ true | false ]
+          close_on_click : true
+        }
+      });
+      $(window).on("load resize", function(){
+        height = Math.max($('.inner-wrap').height(), $(this).height());
+        $('.left-off-canvas-menu,.off-canvas-wrap,#main-nav,.exit-off-canvas').height(height);
+      });
+

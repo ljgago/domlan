@@ -1,0 +1,21 @@
+h1.text-center WebCam
+.row
+  .small-11.small-centered.columns.text-center
+    canvas#canvas(width='640', height='480', style='width:100%; height:100%;')
+
+
+//
+  script.
+  var ctx = document.getElementById('canvas').getContext('2d');
+  var img = new Image();
+  //var img = document.getElementById('miImg');
+  //console.log('Out');
+  $scope.ws.$on('webcam', function (msg) {
+    //console.log('In');
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0);
+    };
+    //img.src = 'data:image/jpeg;base64,' + msg.data;
+    //console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+    console.log(msg);
+  });

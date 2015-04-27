@@ -1,0 +1,51 @@
+.row
+  .medium-12.columns
+    h2 Agregar Dispositivo 
+    form(name='deviceForm', novalidate)
+      .row.collapse.prefix-radius
+        .small-3.large-2.columns
+          span.prefix Nombre
+        .small-9.large-10.columns
+          input(type='text', ng-model='device.name', placeholder='nombre del dispositivo', required)
+      .row.collapse.prefix-radius
+        .small-3.large-2.columns
+          span.prefix ID
+        .small-9.large-10.columns
+          input(type='text', name='id', ng-model='device.id', placeholder='id del dispositivo', required)
+          //span(data-ng-show='!deviceForm.$pristine && deviceForm.id.$error.required') Name is required.
+      .row.collapse.prefix-radius
+        .small-3.large-2.columns
+          span.prefix Ubicación
+        .small-9.large-10.columns
+          input(type='text', ng-model='device.location', placeholder='ubicación del dispositivo', required)
+      .row.collapse.prefix-radius
+        .small-4.large-3.columns
+          span.prefix Tipo
+        .small-8.large-9.columns
+          select(ng-model='device.protocol', ng-options='protocol.type as protocol.name for protocol in protocols', required)
+      .row.collapse.prefix-radius
+        .small-4.large-3.columns
+          span.prefix Categoría
+        .small-8.large-9.columns          
+          select(ng-model='device.category', ng-options='category.type as category.name for category in categories', required)
+      .row
+        .small-6.large-6.columns
+          a.button.success.radius.medium.expand(href='#/add', data-reveal-id='myModal', ng-click='addDevice(device)') Guardar
+          .reveal-modal.tiny(id='myModal', data-reveal)
+            .row
+              .small-12.large-12.text-center
+                h3(id="modalTitle") Dispositivo agregado: 
+                  b.text-center {{device.name}}
+                hr
+                a.button.success.radius.expand.center.custom-close-modal(href='#/') Aceptar
+        .small-6.large-6.columns
+          a.button.alert.radius.medium.expand(href='#/') Cancelar
+
+script.
+  $(document).foundation();
+  $('a.custom-close-modal').click( function () {
+    $('#myModal').foundation('reveal', 'close');
+  });
+
+       
+
