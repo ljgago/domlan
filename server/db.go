@@ -124,6 +124,24 @@ func (l *DeviceDB) PutDeviceDB(key []byte, rawJSON []byte) {
   DEBUG(string(key), string(value))
 }
 
+// DeleteDeviceDB: delete item of the databse.
+//
+// DeleteDeviceDB: elimino un item de la base de datos.
+func (l *DeviceDB) DeleteDeviceDB(key []byte) {
+
+  mutex.Lock()
+  l.OpenDB()
+  defer func() {
+    l.db.Close()
+    mutex.Unlock()
+  }()
+
+  err := l.db.Delete(key, nil)
+  if err != nil {
+    log.Println(err)
+  }
+}
+
 // MergeDeviceDB: merge data of database and the devices
 //
 // MergeDeviceDB: Mezclo los datos de la base de datos y el de los dispositivos
