@@ -122,9 +122,8 @@ func (c *Client) Emit(event string, msg string) {
 //
 // EmitBroadcast: mando un mensajes a todos los clientes conectados.
 func (r *Router) EmitBroadcast(event string, msg string) {
-  
   str := `{"event":` + event + `,"data":"` + msg + `"}`
-  //log.Println(str)
+  DEBUG(str)
   r.broadcast <- []byte(str)
 }
 
@@ -145,14 +144,24 @@ func OnEvent(msg []byte) {
       if err != nil {
         log.Println(err)
       }
-      //key := js.Get("data").Get("id").MustString()
-      //PutDevice([]byte(key), value) {
-      log.Println(string(value))
+      key := js.Get("data").Get("id").MustString()
+      ldb.PutDeviceDB([]byte(key), value)
+      SendAll()
+      DEBUG("Device agregado:", string(value))
 
       //a := dataMerge(msg, []byte(test))
       //log.Println(string(a))
     case "update-device":
     case "delete-device":
+      value, _ := js.Get("data").MarshalJSON()
+      if err != nil {
+        log.Println(err)
+      }
+      key := js.Get("data").Get("name").MustString()
+      ldb.DeleteDeviceDB([]byte(key))
+      SendAll()
+      DEBUG("Item eliminado:", string(value))
+
     default:
       log.Printf("Websockets: No se encontro el evento: \"%s\"", event)
   }
@@ -164,7 +173,13 @@ func OnEvent(msg []byte) {
   }*/
 }
 
+func SendAll() {
+  data := ldb.GetAllDeviceDB()
+  Ruta.EmitBroadcast(`"update-device"`, string(data))
+}
 
+// InitWS: websocket handler
+//
 // InitWS: handler websocket que maneja los requests.
 func InitWS(w http.ResponseWriter, r *http.Request) {
   if r.Method != "GET" {
