@@ -3,12 +3,11 @@ package main
 import (
   "flag"
   "./server"
-  "net/http"
-  "io/ioutil"
+  //"net/http"
+  //"io/ioutil"
   "github.com/gin-gonic/gin"
   //"github.com/elazarl/go-bindata-assetfs"
   //"github.com/gin-gonic/contrib/static"
-
 )
 
 func main() {
@@ -33,8 +32,9 @@ func main() {
   //r.StaticBinData("/assets", assetFS())
   r.GET("/", func(c *gin.Context) {
     //obj := gin.H{"title": "Domlan"}
-    text, _ := ioutil.ReadFile("./client/views/index.html")
-    c.HTMLString(http.StatusOK, string(text))
+    //text, _ := ioutil.ReadFile("./client/views/index.html")
+    //c.HTML(http.StatusOK, string(text), gin.H{"title": "Main website",})
+    c.File("./client/views/index.html")
   })
   r.GET("/ws", func(c *gin.Context) {
     server.InitWS(c.Writer, c.Request)
