@@ -3,6 +3,7 @@ package server
 import (
   //"../modules/mqtt"
   "../modules/mqttgmp"
+  "github.com/ljgago/glue"
   //"time"
 )
 
@@ -28,18 +29,25 @@ func (d *Devices) DeviceWorks() {
   //d.mqttDev = mqttpaho.NewMqttModule("server", "tcp://0.0.0.0:1883", "DomlanMQTT")
   d.mqttDev = mqttgmp.NewMqttModule("server", "0.0.0.0:1883", "DomlanMQTT")
   d.mqttDev.Connect()
-  d.mqttDev.On("device/id/#", func(data []byte) {
-    //key, value := ldb.MergeDeviceDB(data)
-    //ldb.PutDeviceDB([]byte(key), []byte(value))
-    //H.EmitBroadcast(`"update-devices"`, value)
-    DEBUG("Entro al handler mqtt:", string(data))
+  d.mqttDev.On("server/#", func(device []byte) {
+    key, value := ldb.MergeDeviceDB(device)
+    ldb.PutDeviceDB([]byte(key), []byte(value))
+    data := ldb.GetAllDeviceDB()
+    glue.WriteBroadcast(`"update-devices"`, string(data))
+    DEBUG("Entro al handler mqtt:", string(device))
   })
+
+
 
   /****************************************************************
   *  WEBCAMS
   ****************************************************************/
-
-
-
   
+}
+
+/****************************************************************
+*  WEBSOCKETS
+****************************************************************/
+func OnDataReceive(s *glue.Socket) {
+
 }

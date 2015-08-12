@@ -122,7 +122,7 @@ func (c *Client) Emit(event string, msg string) {
 //
 // EmitBroadcast: mando un mensajes a todos los clientes conectados.
 func (r *Router) EmitBroadcast(event string, msg string) {
-  str := `{"event":` + event + `,"data":"` + msg + `"}`
+  str := `{"event":` + event + `,"data":` + msg + `}`
   DEBUG(str)
   r.broadcast <- []byte(str)
 }
@@ -139,6 +139,12 @@ func OnEvent(msg []byte) {
   }
   event := js.Get("event").MustString()
   switch event {
+    case "msg-device":
+      value, _ := js.Get("data").MarshalJSON()
+      if err != nil {
+        log.Println(err)
+      }
+      DEBUG(string(value))
     case "add-device":
       value, _ := js.Get("data").MarshalJSON()
       if err != nil {

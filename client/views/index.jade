@@ -9,6 +9,8 @@ html(lang='es', ng-app='Domlan', ng-controller='DomlanCtrl')
     //link(rel='stylesheet', href='/assets/components/foundation/css/foundation.css')
     link(rel='stylesheet', href='/assets/styles/css/importer.css')
     link(rel='stylesheet', href='/assets/components/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/assets/components/ng-grid/ng-grid.min.css')
+
 
     script(src='/assets/components/foundation/js/vendor/modernizr.js')
     script(src='/assets/components/foundation/js/vendor/jquery.js')
@@ -20,6 +22,8 @@ html(lang='es', ng-app='Domlan', ng-controller='DomlanCtrl')
     script(src='/assets/components/angular-route/angular-route.min.js')
     //script(src='/assets/components/angular-animate/angular-animate.min.js')
     //script(src='/assets/components/angular-listview/angular-listview.min.js')
+    script(src='/assets/components/angular-filter/dist/angular-filter.min.js')
+    script(src='/assets/components/ng-grid/ng-grid-2.0.14.min.js')
 
     // Websocket para Angular
     script(src='/assets/components/ng-websocket/ng-websocket.js')
@@ -28,7 +32,7 @@ html(lang='es', ng-app='Domlan', ng-controller='DomlanCtrl')
     script(src='/assets/js/app.js')
     script(src='/assets/js/controllers.js')
     //script(src='/assets/js/services.js')
-    //script(src='/assets/js/directives.js')
+    script(src='/assets/js/directives.js')
     //script(src='/assets/js/filters.js')
     //script(src='/assets/components/device-directive-ng/dist/device-directive-ng.js')
 
@@ -48,24 +52,25 @@ html(lang='es', ng-app='Domlan', ng-controller='DomlanCtrl')
             li
               a(href='#/')
                 i.fa.fa-home  Inicio
-            li.has-submenu
-              a(href='#/devices') Lista de dispositivos
-              ul.left-submenu
-                li.back
-                  a Atras
-                li
-                  label QMTT Devices
-                li
-                  a(href='#/Totem1') Link 1
-                li
-                  a(href='#/Totem2') Link 2  
-                li
-                  a(href='#/Totem3') Link 3
+            //
+              li.has-submenu
+                a(href='#/devices') Lista de dispositivos
+                ul.left-submenu
+                  li.back
+                    a Atras
+                  li
+                    label QMTT Devices
+                  li
+                    a(href='#/Totem1') Link 1
+                  li
+                    a(href='#/Totem2') Link 2  
+                  li
+                    a(href='#/Totem3') Link 3
             li
               label Lugares
-            div(ng-repeat='location in locations')
+            div(ng-repeat='dbl in db | orderBy:"location" | unique:"location"')
               li
-                a(href='#/{{location}}') {{location}}
+                a(href='#/{{dbl.location}}') {{dbl.location}}
             //
               div(ng-repeat='categorie in categories')
               li.has-submenu

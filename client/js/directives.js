@@ -1,8 +1,34 @@
-
 'use strict';
 
 angular.module('Domlan').
-  directive('dirDevice', function () {
+  directive('dirType', function () {
+    return {
+      restrict: 'EA', 
+      template: '<div ng-repeat="dbl in db | filterBy: [\'location\']:locate | orderBy:\'name\'">' +
+        '<div class="panel">'+
+          '<div class="text-center">'+
+            '<div class="row">'+
+              '<div class="small-6 columns">'+
+                '<h2>{{dbl.name}}</h2>'+
+              '</div>'+
+              '<div class="small-6 columns">'+
+                '<div style="margin-bottom: 0px;" class="switch round large">'+
+                  '<input id="{{dbl.id}}" type="checkbox" ng-model="data" ng-click=""/>'+
+                  '<label for="{{dbl.id}}"></label>'+
+                '</div>'+
+              '</div>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>',
+    };
+  });
+
+
+
+/*
+
+directive('dirDevice', function () {
     return{
       restrict: 'EA',
       template: '<div><div>Hola {{ nombre }}</div>' +
@@ -27,11 +53,32 @@ angular.module('Domlan').
       show: "&" //útiles para llamar a funciones
       },
     }
-  });
+  }).
+  directive('devLight', function () {
+    return {
+      restrict: 'EA',
+      template: '<div class="panel">' +
+        '<div class="text-center">' +
+          '<div class="row">' +
+            '<div class="small-6 columns">' +
+              '<h2>{{name}}</h2>'
+            '</div>' +
+            '<div class="small-6 columns">' +
+              '<div style="margin-bottom: 0px;" class="switch round large">' +
+                '<input id="switchName" type="checkbox"/>' +
+                '<label for="switchName"></label>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>',
+
+    };
+  }).
 
 
 
-/*
+
 Domlan.directive('etiquetas', function () {
   return {
     template : '<p>{{text}}</p>',

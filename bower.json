@@ -17,6 +17,8 @@
     "angular-animate": "1.x.x",
     "font-awesome": "4.x.x",
     "ng-websocket": "~0.2.1",
-    "foundation": "~5.5.1"
+    "foundation": "~5.x.x",
+    "ng-grid": "~2.0.14",
+    "angular-filter": "~0.5.4"
   }
 }

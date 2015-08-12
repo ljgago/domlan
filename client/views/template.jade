@@ -1,0 +1,10 @@
+div(ng-repeat="dbl in db | filterBy: ['location']:locate")
+  .panel
+    .text-center
+      .row
+        .small-6.columns
+          h2 {{dbl.name}}
+        .small-6.columns
+          .switch.round.large(style='margin-bottom: 0px;')
+            input(id='{{dbl.id}}', type='checkbox', ng-model='data', ng-click='')
+            label(for='{{dbl.id}}')

@@ -4,26 +4,36 @@
 // 'geoJobs.filters', 'geoJobs.services', 'geoJobs.directives'
 //var app = angular;
 
-var Domlan = angular.module ('Domlan', ['ngRoute','ngWebsocket']).
+var Domlan = angular.module ('Domlan', [
+    'ngRoute',
+    'ngWebsocket', 
+    'ngGrid',
+    'angular.filter'
+  ]).
   config (['$locationProvider', '$routeProvider', 
     function ($locationProvider, $routeProvider) {
     
     $routeProvider.
       when('/', {
-        template: '<hr><div class="row"><div class="medium-12 columns"><a href="#/add" class="button radius large expand">Agregar dispositivo</a><a href="#/remove" class="button radius large expand">Eliminar dispositivo</a><a class="button radius large expand">Configuración</a></div></div>',
+        //template: '<hr><div class="row"><div class="medium-12 columns"><a href="#/add" class="button radius large expand">Agregar dispositivo</a><a href="#/remove" class="button radius large expand">Eliminar dispositivo</a><a class="button radius large expand">Configuración</a></div></div>',
+        templateUrl: '/assets/views/home.html',
       }).
       when('/add', {
-        templateUrl: '/assets/views/add.html'
+        templateUrl: '/assets/views/add.html',
       }).
       when('/remove', {
-        templateUrl: '/assets/views/remove.html'
+        templateUrl: '/assets/views/remove.html',
       }).
       when("/Webcam", {
         templateUrl: '/assets/views/webcam.html',
         controller: 'webcamCtrl'
       }).
+      when('/list', {
+        templateUrl: '/assets/views/list.html',
+        controller: 'gridCtrl'
+      }).
       when('/:a', {
-        template: '<div>Loading...</div>',
+        template: '<dir-type></dir-type>',
         controller: 'locationCtrl'
       })
 }]);

@@ -4,6 +4,7 @@ angular.module('Domlan').
   controller('DomlanCtrl', function ($scope, $rootScope, $websocket) {
     //$.material.init();
     $scope.drop = "Hola";
+
     $scope.protocols = [
       {type: 'mqtt', name: 'MQTT'},
       {type: 'http', name: 'HTTP'}
@@ -19,6 +20,9 @@ angular.module('Domlan').
 
     $scope.devices = ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor 4'];
     
+    // db va a contener todos los datos recividos del servidor
+    $rootScope.db = "";
+
     // Websockets
     var ws = $websocket.$new({
       url: 'ws://' + window.location.host + '/ws',
@@ -29,14 +33,23 @@ angular.module('Domlan').
 
     ws.$on('$open', function () {
       console.log('Here we are and I\'m pretty sure to get back here for another time at least!');
-      ws.$emit('device', {hola:'Hola yo soy un device', pepe: 123, repetido: 'on'});
+      ws.$emit('msg-device', {hola:'Hola yo soy un device', pepe: 123, repetido: 'on'});
     })
     .$on('$close', function () {
       console.log('Got close, damn you silly wifi!');
     })
     .$on('start', function (msg) {
       console.log("HolaaaA");
-      for(var i=0 ; i<msg.length ; i++){
+      $rootScope.db = msg;
+      $scope.$apply();
+      for(var i=0 ; i<msg.length ; i++) {
+        console.log(msg[i])
+      }
+    })
+    .$on('update-device', function (msg) {
+      $rootScope.db = msg;
+      $scope.$apply();
+      for(var i=0 ; i<msg.length ; i++) {
         console.log(msg[i])
       }
     });
@@ -48,12 +61,13 @@ angular.module('Domlan').
     // addDevice: envío los datos del nuevo dispositivo al servidor
     $scope.addDevice = function (device) {
       ws.$emit('add-device', device);
-      console.log(device);
+      //console.log(device);
     };
 
 
     $scope.imparFolders = ['1', '2', '3', '4', '5', '6'];
     $scope.parFolders = ['7', '8', '9', '10'];
+
 
     $scope.imparFolderList = function () {
       return imparFolderList($scope.imparFolders);
@@ -67,6 +81,33 @@ angular.module('Domlan').
     'Start End Add Update Remove Sort'.split(' ').forEach(function (name) {
       $scope.sortableConfig['on' + name] = console.log.bind(console, name);
     })
+  }).
+  controller('gridCtrl', function ($scope, $websocket) {
+
+    $scope.myData = [
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' },
+      { no: '1', name: 'Hola', location: 'Casa', active: 'OFF' }
+    ];
+    $scope.gridOptions = {
+      data: 'myData',
+      enableCellSelection: true,
+      enableRowSelection: false,
+      enableCellEdit: true,
+      columnDefs: [
+        {field: 'no', displayName: 'Nº', enableCellEdit: true}, 
+        {field: 'name', displayName: 'Nombre', enableCellEdit: true},
+        {field: 'location', displayName: 'Ubicación', enableCellEdit: true}, 
+        {field: 'active', displayName: 'Activo', enableCellEdit: true}
+      ]
+    }
   }).
   controller('webcamCtrl', function ($scope, $rootScope, $websocket) {
     var ws = $websocket.$get('ws://' + window.location.host + '/ws');
@@ -92,6 +133,9 @@ angular.module('Domlan').
   controller('locationCtrl', function ($scope, $routeParams) {
     console.log($routeParams);
     $scope.templateUrl = 'partials/' + $routeParams.a;
+
+    $scope.locate = $routeParams.a;
+    console.log($scope.locate);
   });
 
 

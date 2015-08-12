@@ -1,0 +1,88 @@
+package websocketglue
+
+import (
+  "net/http"
+  "github.com/bitly/go-simplejson"
+  "github.com/desertbit/glue"
+)
+
+type Client struct {
+  s *glue.Socket
+}
+
+
+func onNewSocket(s *glue.Socket) {
+  c := &Client {ws: s}
+
+  data := ldb.GetAllDeviceDB()
+  log.Println("Datos:", data)
+  c.Emit(`"start"`, data)
+  go c.recvLoop()
+}
+
+
+func (c *Client) Emit(event string, msg string) {
+  str := `{"event":` + event + `,"data":` + msg + `}`
+  c.Write(str)
+}
+
+func (c *Client) recvLoop() {
+
+  for {
+    msg, err := s.Read()
+    if err != nil {
+      // Just return and release this goroutine if the socket was closed.
+      if err == glue.ErrSocketClosed {
+        return
+      }
+      log.Printf("read error: %v", err)
+      continue
+    }
+    //h.broadcast <- msg
+    OnEvent(msg) // Proseso el mensaje recivido
+  }
+}
+
+
+func OnEvent(msg []byte) {
+
+  js, err := simplejson.NewJson(msg)
+  if err != nil {
+    log.Println("JSON:", err)
+    return
+  }
+  event := js.Get("event").MustString()
+  switch event {
+    case "add-device":
+      value, _ := js.Get("data").MarshalJSON()
+      if err != nil {
+        log.Println(err)
+      }
+      key := js.Get("data").Get("id").MustString()
+      ldb.PutDeviceDB([]byte(key), value)
+      SendAll()
+      DEBUG("Device agregado:", string(value))
+
+      //a := dataMerge(msg, []byte(test))
+      //log.Println(string(a))
+    case "update-device":
+    case "delete-device":
+      value, _ := js.Get("data").MarshalJSON()
+      if err != nil {
+        log.Println(err)
+      }
+      key := js.Get("data").Get("name").MustString()
+      ldb.DeleteDeviceDB([]byte(key))
+      SendAll()
+      DEBUG("Item eliminado:", string(value))
+
+    default:
+      log.Printf("Websockets: No se encontro el evento: \"%s\"", event)
+  }
+  /*
+  value, _ := js.EncodePretty()
+  if err != nil {
+    log.Println(err)
+    return
+  }*/
+}

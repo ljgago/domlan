@@ -1,0 +1,28 @@
+language: go
+
+go:
+  - 1.3
+  - tip
+
+language: node_js
+
+node_js:
+  - "0.12"
+  - "0.11"
+  - "0.10"
+  - "iojs"
+  - "iojs-v1.0.4"
+
+install:
+  - npm install -g bower
+  - bower install
+  - go get github.com/bmizerany/assert
+  - go get -u github.com/gin-gonic/gin
+  - go get -u github.com/gorilla/websocket
+  - go get -u github.com/bitly/go-simplejson
+  - go get -u github.com/syndtr/goleveldb/leveldb
+  - go get -u git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git
+  - go get -u code.google.com/p/go-uuid/uuid
+  - go get -u github.com/franela/goreq
+  - go get -u github.com/yosssi/gmq/mqtt
+  - go build ./domlan.go
