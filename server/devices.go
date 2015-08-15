@@ -3,7 +3,7 @@ package server
 import (
   //"../modules/mqtt"
   "../modules/mqttgmp"
-  "github.com/ljgago/glue"
+  //"github.com/ljgago/glue"
   //"time"
 )
 
@@ -33,7 +33,7 @@ func (d *Devices) DeviceWorks() {
     key, value := ldb.MergeDeviceDB(device)
     ldb.PutDeviceDB([]byte(key), []byte(value))
     data := ldb.GetAllDeviceDB()
-    glue.WriteBroadcast(`"update-devices"`, string(data))
+    Ruta.EmitBroadcast(`"update-devices"`, string(data))
     DEBUG("Entro al handler mqtt:", string(device))
   })
 
@@ -48,6 +48,3 @@ func (d *Devices) DeviceWorks() {
 /****************************************************************
 *  WEBSOCKETS
 ****************************************************************/
-func OnDataReceive(s *glue.Socket) {
-
-}

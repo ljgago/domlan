@@ -6,7 +6,7 @@ import (
   //"net/http"
   //"io/ioutil"
   "github.com/gin-gonic/gin"
-  "github.com/ljgago/glue"
+  //"github.com/ljgago/glue"
   //"github.com/desertbit/glue"
   //"github.com/elazarl/go-bindata-assetfs"
   //"github.com/gin-gonic/contrib/static"
@@ -22,8 +22,8 @@ func main() {
   server.DEBUG_ENABLE = *debug
   
   server.Dev.DeviceWorks()
-  //go server.Ruta.Run()
-  glue.RunRouter()
+  go server.Ruta.Run()
+  //glue.RunRouter()
 
   r := gin.New()
   r.Use(gin.Logger())
@@ -40,8 +40,7 @@ func main() {
     c.File("./client/views/index.html")
   })
   r.GET("/ws", func(c *gin.Context) {
-    //server.InitWS(c.Writer, c.Request)
-    glue.OnNewSocket(server.OnDataReceive)
+    server.InitWS(c.Writer, c.Request)
   })
   // Escucho por defaul en la dirección 0.0.0.0:3000
   r.Run(":" + *port)

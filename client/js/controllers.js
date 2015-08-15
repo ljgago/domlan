@@ -30,7 +30,6 @@ angular.module('Domlan').
       //protocols: ['binary', 'base64']
       //reconnectInterval: 500 // it will reconnect after 5 seconds
     });
-
     ws.$on('$open', function () {
       console.log('Here we are and I\'m pretty sure to get back here for another time at least!');
       ws.$emit('msg-device', {hola:'Hola yo soy un device', pepe: 123, repetido: 'on'});
