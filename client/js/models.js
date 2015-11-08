@@ -53,6 +53,16 @@
         "uri":"http://192.168.2.111/jpg/image.jpg",
         "update":1000
       }
+    },
+    {
+      "id":"e8d482bc-ccc8-11e4-9518-0019d1e29e1f",
+      "name":"WebCam Nro 1",
+      "type":"http",
+      "category":"webcam",
+      "index":3,
+      "device": {
+        "id":"e8d482bc-ccc8-11e4-9518-0019d1e29e1f",
+        "value": 0;
     }
   ]
 }

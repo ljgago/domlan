@@ -1,4 +1,19 @@
-.panel
+h2.text-center Eliminar Control
+hr
+div(ng-repeat = "dbl in db | orderBy: \'location\'&&\'name\'&&\'category\'")
+  .panel.radius
+    .text-center
+      .row.small-centered(style='display: inline-block;')
+        .small-4.columns
+          h3 {{dbl.location}}
+        .small-4.columns
+          h3 {{dbl.name}}
+        .small-4.columns
+          a.button.alert.radius.tiny(ng-click='removeDevice(dbl)')
+            b ELIMINAR
+
+
+//.panel
   .text-center
     .row
       .small-6.columns

@@ -4,7 +4,13 @@ angular.module('Domlan').
   directive('dirType', function () {
     return {
       restrict: 'EA', 
-      template: '<div ng-repeat="dbl in db | filterBy: [\'location\']:locate | orderBy:\'name\'">' +
+      templateUrl: '/assets/views/controls/main.html'
+    };
+  });
+
+
+/*
+'<div ng-repeat="dbl in db | filterBy: [\'location\']:locate | orderBy:\'name\'">' +
         '<div class="panel">'+
           '<div class="text-center">'+
             '<div class="row">'+
@@ -21,11 +27,7 @@ angular.module('Domlan').
           '</div>'+
         '</div>'+
       '</div>',
-    };
-  });
-
-
-
+*/
 /*
 
 directive('dirDevice', function () {

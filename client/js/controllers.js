@@ -58,10 +58,28 @@ angular.module('Domlan').
      */
 
     // addDevice: envío los datos del nuevo dispositivo al servidor
-    $scope.addDevice = function (device) {
-      ws.$emit('add-device', device);
+    $scope.addDevice = function (dev) {
+      dev.device = { "id": dev.id };
+      //console.log(dev);
+      ws.$emit('add-device', dev);
       //console.log(device);
     };
+    
+    // Funciones para los diferentes controles
+    
+    // Control Switch 
+    $scope.switchControler = function (dev) {
+      ws.$emit('update-device', dev);
+      //console.log(dev);
+    };
+
+    $scope.removeDevice = function (dev) {
+      ws.$emit('remove-device', dev);
+    };
+
+    // Control slide
+    
+
 
 
     $scope.imparFolders = ['1', '2', '3', '4', '5', '6'];

@@ -21,3 +21,5 @@ bower install
 echo -e "\nCompilado Domlan:"
 go build ./domlan.go
 echo "Fin!"
+
+#go get github.com/heatxsink/go-hue/src

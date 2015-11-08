@@ -69,3 +69,21 @@ func (a *MqttModule) On(event string, f func(s []byte)) bool {
   }
   return true
 }
+
+func (a *MqttModule) Publish(topicName, message string ) {
+
+  err := a.cli.Publish(&client.PublishOptions{
+    // QoS is the QoS of the PUBLISH Packet.
+    QoS:       mqtt.QoS0,
+    // Retain is the Retain of the PUBLISH Packet.
+    Retain:    true,
+    // TopicName is the Topic Name of the PUBLISH Packet.
+    TopicName: []byte(topicName),
+    // Message is the Application Message of the PUBLISH Packet.
+    Message:   []byte(message),
+  })
+  if err != nil {
+    panic(err)
+  }
+  return
+}

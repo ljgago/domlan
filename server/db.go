@@ -147,13 +147,13 @@ func (l *DeviceDB) DeleteDeviceDB(key []byte) {
 // MergeDeviceDB: Mezclo los datos de la base de datos y el de los dispositivos
 func (l *DeviceDB) MergeDeviceDB(device []byte) (string, string) {
   
-  dv, err := simplejson.NewJson(device)
+  dev, err := simplejson.NewJson(device)
   if err != nil {
     log.Println("JSON:", err)
     return "", ""
   }
   
-  key := dv.Get("device").Get("id").MustString()
+  key := dev.Get("device").Get("id").MustString()
   old := l.GetDeviceDB([]byte(key))
   if old == "" {
     log.Println("LevelDB: No hay ningun valor asignado a este id:", key)
@@ -166,7 +166,7 @@ func (l *DeviceDB) MergeDeviceDB(device []byte) (string, string) {
     return "", ""
   }
 
-  js.Get("data").Set("device", dv.Get("device").Interface())
+  js.Get("data").Set("device", dev.Get("device").Interface())
 
   value, _ := js.Get("data").Encode()
   if err != nil {

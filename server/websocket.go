@@ -158,12 +158,23 @@ func OnEvent(msg []byte) {
       //a := dataMerge(msg, []byte(test))
       //log.Println(string(a))
     case "update-device":
-    case "delete-device":
       value, _ := js.Get("data").MarshalJSON()
       if err != nil {
         log.Println(err)
       }
-      key := js.Get("data").Get("name").MustString()
+      key := js.Get("data").Get("id").MustString()
+      ldb.PutDeviceDB([]byte(key), value)
+      device, _ := js.Get("data").Get("device").MarshalJSON()
+      data := `{"device":` + string(device) + `}`
+      Dev.mqttDev.Publish(key, data)
+      SendAll()
+      DEBUG("Device agregado:", string(value))
+    case "remove-device":
+      value, _ := js.Get("data").MarshalJSON()
+      if err != nil {
+        log.Println(err)
+      }
+      key := js.Get("data").Get("id").MustString()
       ldb.DeleteDeviceDB([]byte(key))
       SendAll()
       DEBUG("Item eliminado:", string(value))
